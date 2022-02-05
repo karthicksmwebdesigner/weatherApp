@@ -1,0 +1,71 @@
+<div class="container-fluid">
+    <div class="row pt-2">
+        <div class="col-md-4" *ngFor="let items of cards;let i = index;">
+            <div class="card mt-4" id="card" *ngIf="items.showSearch">
+                <form [formGroup]="weatherForm">
+                    <div class="d-flex card-flex">
+                        <div class="row m-auto">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <input type="text" [style.border-color]="warning" class="form-control"
+                                        placeholder="Please enter city name" [(ngModel)]="items.location"
+                                        formControlName="location">
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-primary"
+                                    (click)="search(i,items.location)">Search</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="card mt-4" id="card" *ngIf="!items.showSearch" (click)="activeSearch(i)">
+                <div style="width: 100%;height: 50%;overflow: hidden;">
+                    <img *ngIf="items.showCard" class="w-100 h-100"
+                        [src]="items.currentWeather.weather[0].main == 'Clouds' ? imageSrc : imageSrc1"
+                        alt="Card image cap">
+                </div>
+                <div *ngIf="items.showCard">
+                    <div class="card-img-overlay" style="height:110px;">
+                        <h3 class="card-title text-white m-b-0 dl">{{ items.currentWeather.name }} <i (click)="edit(i)"
+                                class="bi bi-pencil-square" id="icon"></i></h3>
+                    </div>
+                    <div class="card-body weather-small">
+                        <div class="row">
+                            <div class="col-4 b-r align-self-center">
+                                <div class="d-flex">
+                                    <div class="display-6 text-info"><i class="mdi mdi-weather-pouring"></i></div>
+                                    <div class="m-l-20">
+                                        <h1 class="font-light text-info m-b-0">{{ items.currentWeather.main.temp
+                                            }}<sup>F</sup></h1>
+                                        <small>Temperature</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 b-r align-self-center">
+                                <div class="d-flex">
+                                    <div class="display-6 text-info"><i class="mdi mdi-weather-pouring"></i></div>
+                                    <div class="m-l-20">
+                                        <h1 class="font-light text-info m-b-0">{{ items.currentWeather.wind.speed
+                                            }}<sup>km/h</sup></h1> <small>Wind</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 b-r align-self-center">
+                                <div class="d-flex">
+                                    <div class="display-6 text-info"><i class="mdi mdi-weather-pouring"></i></div>
+                                    <div class="m-l-20">
+                                        <h1 class="font-light text-info m-b-0">{{ items.currentWeather.main.temp
+                                            }}<sup>%</sup></h1> <small>Humidity</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
